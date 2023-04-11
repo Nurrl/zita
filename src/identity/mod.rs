@@ -55,7 +55,10 @@ impl Identity {
     }
 
     /// Decode an [`Identity`] from a JWT using the provided [`DecodingKey`].
-    pub fn decode(key: &DecodingKey, value: impl AsRef<str>) -> Result<Self> {
+    pub fn decode(
+        key: &DecodingKey,
+        value: impl AsRef<str>,
+    ) -> Result<Self, jsonwebtoken::errors::Error> {
         let mut validation = jsonwebtoken::Validation::default();
 
         validation.algorithms = vec![ALGORITHM];
@@ -66,7 +69,7 @@ impl Identity {
     }
 
     /// Encode the [`Identity`] to a JWT using the provided [`EncodingKey`].
-    pub fn encode(&self, key: &EncodingKey) -> Result<String> {
+    pub fn encode(&self, key: &EncodingKey) -> Result<String, jsonwebtoken::errors::Error> {
         jsonwebtoken::encode(
             &jsonwebtoken::Header {
                 alg: ALGORITHM,
@@ -75,7 +78,6 @@ impl Identity {
             self,
             key,
         )
-        .map_err(Into::into)
     }
 }
 
