@@ -1,23 +1,35 @@
+use stylist::yew::*;
 use yew::prelude::*;
+use yew_icons::{Icon, IconId};
 
-pub use yew;
+mod components;
+use components::*;
 
-#[function_component]
+#[styled_component]
 pub fn App() -> Html {
-    let counter = use_state(|| 0);
-    let onclick = {
-        let counter = counter.clone();
-        move |_| {
-            let value = *counter + 1;
-            counter.set(value);
-        }
-    };
+    let css = css!(
+        "
+    --background: #F0F0F0;
+    --foreground: #070A52;
+
+    --primary: #6F1AB6;
+
+    body {
+        background: var(--background);
+    }
+    "
+    );
 
     html! {
-        <div>
-            <button {onclick} style={"color: blue;"}>{ "+1" }</button>
-            <p>{ *counter }</p>
-        </div>
+        <>
+            <Global css={css} />
+            <div>
+                <Input placeholder="Email address" autofocus=true />
+                <br /><br />
+                <Input placeholder="Password" />
+                <Button>{"Sign in"}<Icon icon_id={IconId::LucideChevronLast} width="16px" height="16px" /></Button>
+            </div>
+        </>
     }
 }
 
