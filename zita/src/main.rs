@@ -26,7 +26,7 @@ async fn main() -> eyre::Result<()> {
     // Load the config from the environment
     let config = config::Config::init_from_env()?;
 
-    let postgres_pool = web::Data::new(
+    let pool = web::Data::new(
         deadpool_postgres::Pool::builder(deadpool_postgres::Manager::new(
             config.postgres_url,
             tokio_postgres::NoTls,
@@ -66,7 +66,7 @@ async fn main() -> eyre::Result<()> {
     HttpServer::new(move || {
         let app = App::new()
             .wrap_api()
-            .app_data(postgres_pool.clone())
+            .app_data(pool.clone())
             .app_data(jwt_decoding_key.clone())
             .app_data(jwt_encoding_key.clone())
             .app_data(argon2.clone())

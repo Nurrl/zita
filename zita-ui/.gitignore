@@ -1,0 +1,2 @@
+# Ignore pre-build webassembly
+dist
