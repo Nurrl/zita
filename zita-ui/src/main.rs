@@ -5,25 +5,30 @@ use yew_icons::{Icon, IconId};
 mod components;
 use components::*;
 
+mod theme;
+use theme::{use_theme, ThemeProvider};
+
 #[styled_component]
 pub fn App() -> Html {
-    let css = css!(
-        "
-    --background: #F0F0F0;
-    --foreground: #070A52;
+    let theme = use_theme();
 
-    --primary: #6F1AB6;
-
-    body {
-        background: var(--background);
-    }
-    "
+    let style = css!(
+        r#"
+        body {
+            background: ${background};
+            color: ${foreground};
+        }
+    "#,
+        foreground = theme.foreground,
+        background = theme.background
     );
 
     html! {
         <>
-            <Global css={css} />
+            <Global css={style} />
             <div>
+                <Toggle />
+                <br /><br />
                 <Input placeholder="Email address" autofocus=true />
                 <br /><br />
                 <Input placeholder="Password" />
@@ -33,6 +38,15 @@ pub fn App() -> Html {
     }
 }
 
+#[styled_component]
+pub fn Root() -> Html {
+    html! {
+        <ThemeProvider>
+            <App />
+        </ThemeProvider>
+    }
+}
+
 fn main() {
-    yew::Renderer::<App>::new().render();
+    yew::Renderer::<Root>::new().render();
 }

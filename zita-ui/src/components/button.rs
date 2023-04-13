@@ -1,32 +1,33 @@
 use stylist::yew::*;
 use yew::prelude::*;
 
+use crate::theme::use_theme;
+
 #[derive(Debug, PartialEq, Properties)]
 pub struct Props {
     #[prop_or(36)]
     pub size: u16,
-
-    #[prop_or_default]
-    pub on_click: Callback<Event>,
 
     pub children: Children,
 }
 
 #[function_component]
 pub fn Button(props: &Props) -> Html {
+    let theme = use_theme();
+
     let style = use_style!(
-        "
+        r#"
     display: inline-flex;
     align-items: center;
     justify-content: center;
 
-    background: var(--foreground);
-    color: var(--background);
+    background: ${foreground};
+    color: ${background};
 
     font-size: 16px;
     padding: 11px;
 
-    border: 2px solid var(--foreground);
+    border: 2px solid ${foreground};
     border-radius: 8px;
     box-shadow: 0 0 50px rgba(0, 0, 0, 0.25);
 
@@ -34,11 +35,13 @@ pub fn Button(props: &Props) -> Html {
 
     :hover {
         background: transparent;
-        color: var(--foreground);
+        color: ${foreground};
 
         cursor: pointer;
     }
-        "
+    "#,
+        foreground = theme.foreground,
+        background = theme.background
     );
 
     html! {

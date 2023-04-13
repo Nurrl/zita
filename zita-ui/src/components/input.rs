@@ -1,6 +1,8 @@
 use stylist::yew::*;
 use yew::prelude::*;
 
+use crate::theme::use_theme;
+
 #[derive(Debug, PartialEq, Properties)]
 pub struct Props {
     #[prop_or(36)]
@@ -15,15 +17,15 @@ pub struct Props {
 
 #[function_component]
 pub fn Input(props: &Props) -> Html {
-    let autofocus = props.autofocus;
+    let theme = use_theme();
 
     let style = use_style!(
-        "
+        r#"
     display: inline-flex;
     align-items: center;
     justify-content: center;
 
-    background: var(--background);
+    background: ${background};
 
     padding: 12px;
 
@@ -32,19 +34,21 @@ pub fn Input(props: &Props) -> Html {
 
     input {
         background: none;
-        color: var(--foreground);
+        color: ${foreground};
 
         font-size: 16px;
 
         outline: none;
         border: 0;
     }
-        "
+    "#,
+        foreground = theme.foreground,
+        background = theme.background
     );
 
     html! {
-        <div class={style}>
-            <input type="text" size={props.size.to_string()} placeholder={props.placeholder.clone()} {autofocus} />
-        </div>
+        <span class={style}>
+            <input type="text" size={props.size.to_string()} placeholder={props.placeholder.clone()} autofocus={props.autofocus} />
+        </span>
     }
 }
