@@ -1,49 +1,21 @@
 use stylist::yew::*;
 use yew::prelude::*;
-use yew_icons::{Icon, IconId};
+use yew_router::prelude::*;
 
 mod components;
-use components::*;
-
 mod theme;
-use theme::{use_theme, ThemeProvider};
+mod views;
 
-#[styled_component]
-pub fn App() -> Html {
-    let theme = use_theme();
-
-    let style = css!(
-        r#"
-        body {
-            background: ${background};
-            color: ${foreground};
-        }
-    "#,
-        foreground = theme.foreground,
-        background = theme.background
-    );
-
-    html! {
-        <>
-            <Global css={style} />
-            <div>
-                <Toggle />
-                <br /><br />
-                <Input placeholder="Email address" autofocus=true />
-                <br /><br />
-                <Input placeholder="Password" />
-                <Button>{"Sign in"}<Icon icon_id={IconId::LucideChevronLast} width="16px" height="16px" /></Button>
-            </div>
-        </>
-    }
-}
+use theme::ThemeProvider;
 
 #[styled_component]
 pub fn Root() -> Html {
     html! {
-        <ThemeProvider>
-            <App />
-        </ThemeProvider>
+        <BrowserRouter>
+            <ThemeProvider>
+                <Switch<views::Route> render={views::switch} />
+            </ThemeProvider>
+        </BrowserRouter>
     }
 }
 

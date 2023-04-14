@@ -1,7 +1,6 @@
 use stylist::yew::*;
 use yew::prelude::*;
 
-use wasm_bindgen::JsCast;
 use web_sys::HtmlInputElement;
 
 use crate::theme::use_theme;
@@ -82,12 +81,9 @@ pub fn Toggle(props: &Props) -> Html {
 
     let onchange = props.callback.clone().map(|callback| {
         Callback::from(move |event: Event| {
-            if let Some(Ok(target)) = event
-                .target()
-                .map(|target| target.dyn_into::<HtmlInputElement>())
-            {
-                callback.emit(target.checked());
-            }
+            let checkbox = event.target_unchecked_into::<HtmlInputElement>();
+
+            callback.emit(checkbox.checked());
         })
     });
 
