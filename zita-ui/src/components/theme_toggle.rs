@@ -1,4 +1,5 @@
 use yew::prelude::*;
+use yew_icons::IconId;
 
 use super::Toggle;
 use crate::theme::{use_theme, Theme};
@@ -22,6 +23,10 @@ pub fn ThemeToggle(props: &Props) -> Html {
     });
 
     html! {
-        <Toggle<Theme> value={theme} states={(Theme::Light, Theme::Dark)} size={props.size} length={props.length} />
+        <Toggle<Theme>
+            value={theme}
+            states={(Theme::Light, Theme::Dark)}
+            icons={(IconId::LucideSunDim, IconId::LucideMoon)}
+            size={props.size} length={props.length} />
     }
 }

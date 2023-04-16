@@ -45,6 +45,8 @@ pub fn Button(props: &Props) -> Html {
     );
 
     html! {
-        <button class={style}>{for props.children.iter()}</button>
+        <button class={style}>
+            {for props.children.iter()}
+        </button>
     }
 }

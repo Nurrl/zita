@@ -1,5 +1,6 @@
 use stylist::yew::*;
 use yew::prelude::*;
+use yew_icons::{Icon, IconId};
 
 use web_sys::HtmlInputElement;
 
@@ -12,11 +13,12 @@ where
 {
     #[prop_or(16)]
     pub size: u16,
-
     pub length: Option<u16>,
 
     pub value: UseStateHandle<T>,
     pub states: (T, T),
+
+    pub icons: Option<(IconId, IconId)>,
 }
 
 #[function_component]
@@ -49,17 +51,20 @@ pub fn Toggle<T: Copy + PartialEq + 'static>(props: &Props<T>) -> Html {
         border-radius: ${size}px;
     }
 
-    label:after {
+    label span {
         background: ${bg};
-        content: "";
 
         top: 4px;
         left: 4px;
         width: ${size}px;
         height: ${size}px;
 
-        position: absolute;
         border-radius: ${size}px;
+
+        position: absolute;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
 
         transition: 0.2s;
     }
@@ -68,12 +73,12 @@ pub fn Toggle<T: Copy + PartialEq + 'static>(props: &Props<T>) -> Html {
         background: ${fg};
     }
 
-    input:checked + label:after {
+    input:checked + label span {
         left: calc(100% - 4px);
         transform: translateX(-100%);
     }
 
-    label:active:after {
+    label:active span {
         width: calc(${size}px + 10%);
     }
     "#,
@@ -83,6 +88,8 @@ pub fn Toggle<T: Copy + PartialEq + 'static>(props: &Props<T>) -> Html {
         length = props.length.unwrap_or(props.size * 2)
     );
 
+    let id = nanoid::nanoid!(10);
+    let checked = *props.value == props.states.1;
     let onchange = Callback::from({
         let value = props.value.clone();
         let states = props.states;
@@ -97,12 +104,30 @@ pub fn Toggle<T: Copy + PartialEq + 'static>(props: &Props<T>) -> Html {
         }
     });
 
-    let id = nanoid::nanoid!(10);
+    let icon = props
+        .icons
+        .map(|(off, on)| match checked {
+            false => off,
+            true => on,
+        })
+        .map(|icon_id| {
+            html! {
+                <Icon
+                    {icon_id}
+                    width={format!("{}px", props.size - 2)}
+                    height={format!("{}px", props.size - 2)} />
+            }
+        });
 
     html! {
         <span class={style}>
-            <input type="checkbox" id={id.clone()} {onchange} checked={ *props.value == props.states.1 } />
-            <label for={id}></label>
+            <input
+                type="checkbox"
+                id={id.clone()}
+                {onchange}
+                {checked} />
+
+            <label for={id}><span>{icon}</span></label>
         </span>
     }
 }

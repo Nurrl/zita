@@ -48,7 +48,11 @@ pub fn Input(props: &Props) -> Html {
 
     html! {
         <span class={style}>
-            <input type="text" size={props.size.to_string()} placeholder={props.placeholder.clone()} autofocus={props.autofocus} />
+            <input
+                type="text"
+                size={props.size.to_string()}
+                placeholder={props.placeholder.clone()}
+                autofocus={props.autofocus} />
         </span>
     }
 }
