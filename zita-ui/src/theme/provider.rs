@@ -10,27 +10,25 @@ pub struct ThemeProviderProps {
 
 #[styled_component]
 pub fn ThemeProvider(props: &ThemeProviderProps) -> Html {
-    let theme = use_state(Theme::default);
+    let theme = use_state_eq(Theme::load);
 
     let style = css!(
         r#"
     body {
-        background: ${background};
-        color: ${foreground};
+        background: ${bg};
+        color: ${fg};
 
         font-family: "Open Sans", sans-serif;
     }
     "#,
-        foreground = theme.foreground,
-        background = theme.background
+        fg = theme.fg(),
+        bg = theme.bg()
     );
 
     html! {
-        <>
+        <ContextProvider<UseStateHandle<Theme>> context={theme}>
             <Global css={style} />
-            <ContextProvider<UseStateHandle<Theme>> context={theme}>
-                {props.children.clone()}
-            </ContextProvider<UseStateHandle<Theme>>>
-        </>
+            {for props.children.iter()}
+        </ContextProvider<UseStateHandle<Theme>>>
     }
 }

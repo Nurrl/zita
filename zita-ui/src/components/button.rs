@@ -21,13 +21,13 @@ pub fn Button(props: &Props) -> Html {
     align-items: center;
     justify-content: center;
 
-    background: ${foreground};
-    color: ${background};
+    background: ${fg};
+    color: ${bg};
 
     font-size: 16px;
     padding: 11px;
 
-    border: 2px solid ${foreground};
+    border: 2px solid ${fg};
     border-radius: 8px;
     box-shadow: 0 0 50px rgba(0, 0, 0, 0.25);
 
@@ -35,13 +35,13 @@ pub fn Button(props: &Props) -> Html {
 
     :hover {
         background: transparent;
-        color: ${foreground};
+        color: ${fg};
 
         cursor: pointer;
     }
     "#,
-        foreground = theme.foreground,
-        background = theme.background
+        fg = theme.fg(),
+        bg = theme.bg()
     );
 
     html! {

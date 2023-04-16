@@ -25,7 +25,7 @@ pub fn Input(props: &Props) -> Html {
     align-items: center;
     justify-content: center;
 
-    background: ${background};
+    background: ${bg};
 
     padding: 12px;
 
@@ -34,7 +34,7 @@ pub fn Input(props: &Props) -> Html {
 
     input {
         background: none;
-        color: ${foreground};
+        color: ${fg};
 
         font-size: 16px;
 
@@ -42,8 +42,8 @@ pub fn Input(props: &Props) -> Html {
         border: 0;
     }
     "#,
-        foreground = theme.foreground,
-        background = theme.background
+        fg = theme.fg(),
+        bg = theme.bg()
     );
 
     html! {

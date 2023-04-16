@@ -8,3 +8,6 @@ pub use button::Button;
 
 mod toggle;
 pub use toggle::Toggle;
+
+mod theme_toggle;
+pub use theme_toggle::ThemeToggle;

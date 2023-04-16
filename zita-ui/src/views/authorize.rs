@@ -8,7 +8,7 @@ use crate::components::*;
 pub fn Authorize() -> Html {
     html! {
         <div>
-            <Toggle />
+            <ThemeToggle />
             <br /><br />
             <Input placeholder="Email address" autofocus=true />
             <br /><br />
