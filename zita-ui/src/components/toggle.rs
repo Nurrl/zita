@@ -31,9 +31,6 @@ pub fn Toggle<T: Copy + PartialEq + 'static>(props: &Props<T>) -> Html {
     vertical-align: middle;
 
     input[type=checkbox] {
-        height: 0;
-        width: 0;
-
         display: none;
     }
 

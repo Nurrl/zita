@@ -7,13 +7,14 @@ use crate::components::*;
 #[styled_component]
 pub fn Authorize() -> Html {
     html! {
-        <div>
+        <Island>
             <ThemeToggle size=20 />
             <br /><br />
             <Input placeholder="Email address" autofocus=true />
             <br /><br />
             <Input placeholder="Password" />
+            <br /><br />
             <Button>{"Sign in"}<Icon icon_id={IconId::LucideChevronLast} width="16px" height="16px" /></Button>
-        </div>
+        </Island>
     }
 }

@@ -14,11 +14,17 @@ pub fn ThemeProvider(props: &ThemeProviderProps) -> Html {
 
     let style = css!(
         r#"
-    body {
+    html, body {
+        height: 100%;
+
         background: ${bg};
         color: ${fg};
 
         font-family: "Open Sans", sans-serif;
+    }
+
+    body {
+        margin: 0;
     }
     "#,
         fg = theme.fg(),
