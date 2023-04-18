@@ -11,9 +11,9 @@ pub struct Props<T>
 where
     T: PartialEq,
 {
-    #[prop_or(16)]
-    pub size: u16,
-    pub length: Option<u16>,
+    #[prop_or(AttrValue::from("24px"))]
+    pub size: AttrValue,
+    pub length: Option<AttrValue>,
 
     pub value: UseStateHandle<T>,
     pub states: (T, T),
@@ -38,14 +38,14 @@ pub fn Toggle<T: Copy + PartialEq + 'static>(props: &Props<T>) -> Html {
         background: rgba(127, 127, 127, 0.5);
 
         cursor: pointer;
-        width: calc(${length}px + 8px);
-        height: calc(${size}px + 8px);
+        width: calc(${length} + 8px);
+        height: calc(${size} + 8px);
 
         display: block;
         position: relative;
 
         border: 2px solid ${fg};
-        border-radius: ${size}px;
+        border-radius: ${size};
     }
 
     label span {
@@ -53,10 +53,10 @@ pub fn Toggle<T: Copy + PartialEq + 'static>(props: &Props<T>) -> Html {
 
         top: 4px;
         left: 4px;
-        width: ${size}px;
-        height: ${size}px;
+        width: ${size};
+        height: ${size};
 
-        border-radius: ${size}px;
+        border-radius: ${size};
 
         position: absolute;
         display: inline-flex;
@@ -76,13 +76,16 @@ pub fn Toggle<T: Copy + PartialEq + 'static>(props: &Props<T>) -> Html {
     }
 
     label:active span {
-        width: calc(${size}px + 10%);
+        width: calc(${size} + 5%);
     }
     "#,
         fg = theme.fg(),
         bg = theme.bg(),
         size = props.size,
-        length = props.length.unwrap_or(props.size * 2)
+        length = props
+            .length
+            .as_ref()
+            .unwrap_or(&format!("calc({} * 2)", props.size).into())
     );
 
     let id = nanoid::nanoid!(10);
@@ -111,8 +114,8 @@ pub fn Toggle<T: Copy + PartialEq + 'static>(props: &Props<T>) -> Html {
             html! {
                 <Icon
                     {icon_id}
-                    width={format!("{}px", props.size - 2)}
-                    height={format!("{}px", props.size - 2)} />
+                    width={format!("calc({} - 2px)", props.size)}
+                    height={format!("calc({} - 2px)", props.size)} />
             }
         });
 

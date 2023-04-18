@@ -8,13 +8,13 @@ use crate::components::*;
 pub fn Authorize() -> Html {
     html! {
         <Island>
-            <ThemeToggle size=20 />
+            <ThemeToggle size="24px" />
             <br /><br />
             <Input placeholder="Email address" autofocus=true />
             <br /><br />
             <Input placeholder="Password" />
             <br /><br />
-            <Button>{"Sign in"}<Icon icon_id={IconId::LucideChevronLast} width="16px" height="16px" /></Button>
+            <Button size="100%">{"Sign in"}<Icon icon_id={IconId::LucideChevronLast} width="16px" height="16px" /></Button>
         </Island>
     }
 }

@@ -5,8 +5,8 @@ use crate::theme::use_theme;
 
 #[derive(Debug, PartialEq, Properties)]
 pub struct Props {
-    #[prop_or(36)]
-    pub size: u16,
+    #[prop_or(AttrValue::from("320px"))]
+    pub size: AttrValue,
 
     #[prop_or(AttrValue::from("..."))]
     pub placeholder: AttrValue,
@@ -27,30 +27,32 @@ pub fn Input(props: &Props) -> Html {
 
     background: ${bg};
 
+    width: ${size};
     padding: 12px;
 
     border-radius: 4px;
     box-shadow: 0 0 50px rgba(0, 0, 0, 0.25);
 
     input {
+        width: 100%;
+        font-size: 16px;
+
         background: none;
         color: ${fg};
-
-        font-size: 16px;
 
         outline: none;
         border: 0;
     }
     "#,
         fg = theme.fg(),
-        bg = theme.bg()
+        bg = theme.bg(),
+        size = props.size
     );
 
     html! {
         <span class={style}>
             <input
                 type="text"
-                size={props.size.to_string()}
                 placeholder={props.placeholder.clone()}
                 autofocus={props.autofocus} />
         </span>

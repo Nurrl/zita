@@ -5,8 +5,8 @@ use crate::theme::use_theme;
 
 #[derive(Debug, PartialEq, Properties)]
 pub struct Props {
-    #[prop_or(36)]
-    pub size: u16,
+    #[prop_or(AttrValue::from("96px"))]
+    pub size: AttrValue,
 
     pub children: Children,
 }
@@ -24,6 +24,7 @@ pub fn Button(props: &Props) -> Html {
     background: ${fg};
     color: ${bg};
 
+    width: ${size};
     font-size: 16px;
     padding: 11px;
 
@@ -41,7 +42,8 @@ pub fn Button(props: &Props) -> Html {
     }
     "#,
         fg = theme.fg(),
-        bg = theme.bg()
+        bg = theme.bg(),
+        size = props.size
     );
 
     html! {

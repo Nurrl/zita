@@ -6,10 +6,9 @@ use crate::theme::{use_theme, Theme};
 
 #[derive(Debug, PartialEq, Properties)]
 pub struct Props {
-    #[prop_or(16)]
-    pub size: u16,
-
-    pub length: Option<u16>,
+    #[prop_or(AttrValue::from("24px"))]
+    pub size: AttrValue,
+    pub length: Option<AttrValue>,
 }
 
 #[function_component]
@@ -27,6 +26,6 @@ pub fn ThemeToggle(props: &Props) -> Html {
             value={theme}
             states={(Theme::Light, Theme::Dark)}
             icons={(IconId::LucideSunDim, IconId::LucideMoon)}
-            size={props.size} length={props.length} />
+            size={props.size.clone()} length={props.length.clone()} />
     }
 }
