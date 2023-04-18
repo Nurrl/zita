@@ -24,8 +24,8 @@ pub fn ThemeToggle(props: &Props) -> Html {
     html! {
         <Toggle<Theme>
             value={theme}
-            states={(Theme::Light, Theme::Dark)}
-            icons={(IconId::LucideSunDim, IconId::LucideMoon)}
+            states={ (Theme::Light, Theme::Dark) }
+            icons={ (IconId::LucideSunDim, IconId::LucideMoon) }
             size={props.size.clone()} length={props.length.clone()} />
     }
 }

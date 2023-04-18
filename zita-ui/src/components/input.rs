@@ -29,7 +29,6 @@ pub fn Input(props: &Props) -> Html {
     background: ${bg};
 
     width: ${size};
-    padding: 12px;
 
     border-radius: 4px;
     box-shadow: 0 0 50px rgba(0, 0, 0, 0.25);
@@ -41,6 +40,7 @@ pub fn Input(props: &Props) -> Html {
         background: none;
         color: ${fg};
 
+        padding: 12px;
         outline: none;
         border: 0;
     }

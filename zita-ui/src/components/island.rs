@@ -18,7 +18,8 @@ pub fn Island(props: &Props) -> Html {
     width: 100%;
     height: 100%;
 
-    span {
+    > span {
+        display: block;
         text-align: center;
     }
     "#

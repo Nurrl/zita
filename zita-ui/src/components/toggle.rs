@@ -48,7 +48,7 @@ pub fn Toggle<T: Copy + PartialEq + 'static>(props: &Props<T>) -> Html {
         border-radius: ${size};
     }
 
-    label span {
+    label > span {
         background: ${bg};
 
         top: 4px;
@@ -70,12 +70,12 @@ pub fn Toggle<T: Copy + PartialEq + 'static>(props: &Props<T>) -> Html {
         background: ${fg};
     }
 
-    input:checked + label span {
+    input:checked + label > span {
         left: calc(100% - 4px);
         transform: translateX(-100%);
     }
 
-    label:active span {
+    label:active > span {
         width: calc(${size} + 5%);
     }
     "#,
@@ -88,7 +88,7 @@ pub fn Toggle<T: Copy + PartialEq + 'static>(props: &Props<T>) -> Html {
             .unwrap_or(&format!("calc({} * 2)", props.size).into())
     );
 
-    let id = nanoid::nanoid!(10);
+    let id = use_memo(|_| nanoid::nanoid!(10), ());
     let checked = *props.value == props.states.1;
     let onchange = Callback::from({
         let value = props.value.clone();
@@ -123,11 +123,11 @@ pub fn Toggle<T: Copy + PartialEq + 'static>(props: &Props<T>) -> Html {
         <span class={style}>
             <input
                 type="checkbox"
-                id={id.clone()}
+                id={(*id).clone()}
                 {onchange}
                 {checked} />
 
-            <label for={id}><span>{icon}</span></label>
+            <label for={(*id).clone()}><span>{icon}</span></label>
         </span>
     }
 }
