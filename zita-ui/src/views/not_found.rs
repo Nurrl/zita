@@ -16,12 +16,12 @@ pub fn NotFound() -> Html {
         <Island>
             <Icon icon_id={IconId::LucideGhost} width="96px" height="96px" />
 
-            <p>{ "It seems the resource you're after does not exist." }</p>
+            <p>{"It seems the resource you're after does not exist."}</p>
 
             <p>
                 <Link<Route> to={Route::Home}>
                     <Icon icon_id={IconId::LucideUndo} width="16px" height="16px" />
-                    { " Save me from the void" }
+                    {" Save me from the void"}
                 </Link<Route>>
             </p>
         </Island>

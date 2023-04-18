@@ -1,4 +1,5 @@
 use stylist::yew::*;
+use web_sys::HtmlInputElement;
 use yew::prelude::*;
 
 use crate::theme::use_theme;
@@ -49,12 +50,29 @@ pub fn Input(props: &Props) -> Html {
         size = props.size
     );
 
+    let input = use_node_ref();
+
+    use_effect({
+        let input = input.clone();
+        let autofocus = props.autofocus;
+
+        move || {
+            if autofocus {
+                input
+                    .cast::<HtmlInputElement>()
+                    .unwrap()
+                    .focus()
+                    .expect("Unable to focus the input field");
+            }
+        }
+    });
+
     html! {
         <span class={style}>
             <input
+                ref={input}
                 type="text"
-                placeholder={props.placeholder.clone()}
-                autofocus={props.autofocus} />
+                placeholder={props.placeholder.clone()} />
         </span>
     }
 }
