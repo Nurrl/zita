@@ -17,8 +17,8 @@ pub fn ThemeProvider(props: &ThemeProviderProps) -> Html {
     html, body {
         height: 100%;
 
-        background: ${bg};
-        color: ${fg};
+        background: ${background};
+        color: ${text};
 
         font-family: "Open Sans", sans-serif;
     }
@@ -27,8 +27,8 @@ pub fn ThemeProvider(props: &ThemeProviderProps) -> Html {
         margin: 0;
     }
     "#,
-        fg = theme.fg(),
-        bg = theme.bg()
+        text = theme.text(),
+        background = theme.background()
     );
 
     html! {

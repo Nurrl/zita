@@ -24,17 +24,24 @@ impl Theme {
             .expect("Unable to store theming preferences to local storage")
     }
 
-    pub fn fg(&self) -> &'static str {
+    pub fn text(&self) -> &'static str {
         match self {
             Self::Light => "#070A52",
             Self::Dark => "#F0F0F0",
         }
     }
 
-    pub fn bg(&self) -> &'static str {
+    pub fn background(&self) -> &'static str {
         match self {
             Self::Light => "#F0F0F0",
-            Self::Dark => "#070A52",
+            Self::Dark => "#121212",
+        }
+    }
+
+    pub fn contrast(&self) -> &'static str {
+        match self {
+            Self::Light => "#FFFFFF",
+            Self::Dark => "#2A2F4F",
         }
     }
 }

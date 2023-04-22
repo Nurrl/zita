@@ -26,7 +26,7 @@ pub fn Input(props: &Props) -> Html {
     align-items: center;
     justify-content: center;
 
-    background: ${bg};
+    background: ${contrast};
 
     width: ${size};
 
@@ -38,15 +38,15 @@ pub fn Input(props: &Props) -> Html {
         font-size: 16px;
 
         background: none;
-        color: ${fg};
+        color: ${text};
 
         padding: 12px;
         outline: none;
         border: 0;
     }
     "#,
-        fg = theme.fg(),
-        bg = theme.bg(),
+        text = theme.text(),
+        contrast = theme.contrast(),
         size = props.size
     );
 

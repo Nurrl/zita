@@ -44,12 +44,12 @@ pub fn Toggle<T: Copy + PartialEq + 'static>(props: &Props<T>) -> Html {
         display: block;
         position: relative;
 
-        border: 2px solid ${fg};
+        border: 2px solid ${text};
         border-radius: ${size};
     }
 
     label > span {
-        background: ${bg};
+        background: ${background};
 
         top: 4px;
         left: 4px;
@@ -67,7 +67,7 @@ pub fn Toggle<T: Copy + PartialEq + 'static>(props: &Props<T>) -> Html {
     }
 
     input:checked + label {
-        background: ${fg};
+        background: ${text};
     }
 
     input:checked + label > span {
@@ -79,8 +79,8 @@ pub fn Toggle<T: Copy + PartialEq + 'static>(props: &Props<T>) -> Html {
         width: calc(${size} + 5%);
     }
     "#,
-        fg = theme.fg(),
-        bg = theme.bg(),
+        text = theme.text(),
+        background = theme.background(),
         size = props.size,
         length = props
             .length

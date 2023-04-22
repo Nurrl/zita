@@ -18,6 +18,10 @@ pub fn Authorize() -> Html {
             <br />
 
             <p><Button size="100%">{"Sign in"}<Icon icon_id={ IconId::LucideChevronLast } /></Button></p>
+
+            <br />
+
+            <p><ThemeToggle /></p>
         </Island>
     }
 }

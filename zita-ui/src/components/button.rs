@@ -21,28 +21,29 @@ pub fn Button(props: &Props) -> Html {
     align-items: center;
     justify-content: center;
 
-    background: ${fg};
-    color: ${bg};
+    background: ${text};
+    color: ${background};
 
     width: ${size};
     font-size: 16px;
     padding: 11px;
 
-    border: 2px solid ${fg};
+    border: 2px solid ${text};
     border-radius: 8px;
     box-shadow: 0 0 50px rgba(0, 0, 0, 0.25);
 
     transition: 0.15s;
 
     :hover {
-        background: transparent;
-        color: ${fg};
+        background: ${contrast};
+        color: ${text};
 
         cursor: pointer;
     }
     "#,
-        fg = theme.fg(),
-        bg = theme.bg(),
+        text = theme.text(),
+        background = theme.background(),
+        contrast = theme.contrast(),
         size = props.size
     );
 
