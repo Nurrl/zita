@@ -5,6 +5,9 @@ use crate::theme::use_theme;
 
 #[derive(Debug, PartialEq, Properties)]
 pub struct Props {
+    #[prop_or(AttrValue::from("button"))]
+    pub type_: AttrValue,
+
     #[prop_or(AttrValue::from("96px"))]
     pub size: AttrValue,
 
@@ -48,7 +51,9 @@ pub fn Button(props: &Props) -> Html {
     );
 
     html! {
-        <button class={style}>
+        <button
+            type={props.type_.clone()}
+            class={style}>
             {for props.children.iter()}
         </button>
     }

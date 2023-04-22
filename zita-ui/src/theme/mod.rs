@@ -1,4 +1,4 @@
-use gloo_storage::{LocalStorage, Storage};
+use gloo::storage::{LocalStorage, Storage};
 use serde::{Deserialize, Serialize};
 use yew::prelude::*;
 
@@ -21,7 +21,7 @@ impl Theme {
 
     pub fn store(theme: Theme) {
         LocalStorage::set(THEME_STORAGE_KEY, theme)
-            .expect("Unable to store theming preferences to local storage")
+            .expect("Unable to store theming preferences to local storage, aborting.")
     }
 
     pub fn text(&self) -> &'static str {

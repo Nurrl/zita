@@ -9,7 +9,7 @@ use crate::components::*;
 #[styled_component]
 pub fn NotFound() -> Html {
     // Ensure we replace the URL by the exact URL of the not found page
-    let navigator = use_navigator().expect("Unable to interact with Browser history");
+    let navigator = use_navigator().expect("Unable to interact with Browser history, aborting.");
     navigator.replace(&Route::NotFound);
 
     html! {

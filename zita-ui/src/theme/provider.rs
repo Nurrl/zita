@@ -14,21 +14,13 @@ pub fn ThemeProvider(props: &ThemeProviderProps) -> Html {
 
     let style = css!(
         r#"
-    html, body {
-        height: 100%;
-
+    body {
         background: ${background};
         color: ${text};
-
-        font-family: "Open Sans", sans-serif;
-    }
-
-    body {
-        margin: 0;
     }
     "#,
-        text = theme.text(),
-        background = theme.background()
+        background = theme.background(),
+        text = theme.text()
     );
 
     html! {

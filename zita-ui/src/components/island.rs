@@ -3,6 +3,9 @@ use yew::prelude::*;
 
 #[derive(Debug, PartialEq, Properties)]
 pub struct Props {
+    #[prop_or(AttrValue::from("360px"))]
+    pub width: AttrValue,
+
     pub children: Children,
 }
 
@@ -21,8 +24,11 @@ pub fn Island(props: &Props) -> Html {
     > span {
         display: block;
         text-align: center;
+
+        width: ${width};
     }
-    "#
+    "#,
+        width = props.width
     );
 
     html! {

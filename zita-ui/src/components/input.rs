@@ -6,11 +6,19 @@ use crate::theme::use_theme;
 
 #[derive(Debug, PartialEq, Properties)]
 pub struct Props {
-    #[prop_or(AttrValue::from("320px"))]
-    pub size: AttrValue,
+    #[prop_or(AttrValue::from("text"))]
+    pub type_: AttrValue,
+
+    pub name: AttrValue,
 
     #[prop_or(AttrValue::from("..."))]
     pub placeholder: AttrValue,
+
+    #[prop_or(AttrValue::from("320px"))]
+    pub size: AttrValue,
+
+    #[prop_or_default]
+    pub required: bool,
 
     #[prop_or_default]
     pub autofocus: bool,
@@ -52,27 +60,36 @@ pub fn Input(props: &Props) -> Html {
 
     let input = use_node_ref();
 
-    use_effect({
-        let input = input.clone();
-        let autofocus = props.autofocus;
+    // Use of `use_effect_with_deps` and `()` as deps to only
+    // run on the first render and not later re-draws.
+    use_effect_with_deps(
+        {
+            let input = input.clone();
+            let autofocus = props.autofocus;
 
-        move || {
-            if autofocus {
-                input
-                    .cast::<HtmlInputElement>()
-                    .unwrap()
-                    .focus()
-                    .expect("Unable to focus the input field");
+            move |_| {
+                if autofocus {
+                    input
+                        .cast::<HtmlInputElement>()
+                        .unwrap()
+                        .focus()
+                        .expect("Unable to focus the input field, aborting.");
+                }
             }
-        }
-    });
+        },
+        (),
+    );
+
+    let required = props.required;
 
     html! {
         <span class={style}>
             <input
                 ref={input}
-                type="text"
-                placeholder={props.placeholder.clone()} />
+                name={props.name.clone()}
+                type={props.type_.clone()}
+                placeholder={props.placeholder.clone()}
+                {required} />
         </span>
     }
 }
