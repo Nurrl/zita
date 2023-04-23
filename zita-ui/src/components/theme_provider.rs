@@ -1,7 +1,7 @@
 use stylist::yew::*;
 use yew::prelude::*;
 
-use super::Theme;
+use crate::theme::Theme;
 
 #[derive(Debug, PartialEq, Properties)]
 pub struct ThemeProviderProps {
@@ -29,4 +29,9 @@ pub fn ThemeProvider(props: &ThemeProviderProps) -> Html {
             {for props.children.iter()}
         </ContextProvider<UseStateHandle<Theme>>>
     }
+}
+
+#[hook]
+pub fn use_theme() -> UseStateHandle<Theme> {
+    use_context::<UseStateHandle<Theme>>().unwrap()
 }

@@ -6,7 +6,7 @@ mod components;
 mod theme;
 mod views;
 
-use theme::ThemeProvider;
+use components::*;
 
 #[styled_component]
 pub fn Root() -> Html {

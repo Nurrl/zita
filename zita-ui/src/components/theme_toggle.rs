@@ -1,8 +1,8 @@
 use yew::prelude::*;
 use yew_icons::IconId;
 
-use super::Toggle;
-use crate::theme::{use_theme, Theme};
+use super::{use_theme, Toggle};
+use crate::theme::Theme;
 
 #[derive(Debug, PartialEq, Properties)]
 pub struct Props {

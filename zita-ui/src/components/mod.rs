@@ -12,6 +12,9 @@ pub use island::Island;
 mod spinner;
 pub use spinner::Spinner;
 
+mod theme_provider;
+pub use theme_provider::{use_theme, ThemeProvider};
+
 mod theme_toggle;
 pub use theme_toggle::ThemeToggle;
 

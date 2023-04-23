@@ -1,9 +1,5 @@
 use gloo::storage::{LocalStorage, Storage};
 use serde::{Deserialize, Serialize};
-use yew::prelude::*;
-
-mod provider;
-pub use provider::ThemeProvider;
 
 const THEME_STORAGE_KEY: &'static str = "theme";
 
@@ -44,9 +40,4 @@ impl Theme {
             Self::Dark => "#2A2F4F",
         }
     }
-}
-
-#[hook]
-pub fn use_theme() -> UseStateHandle<Theme> {
-    use_context::<UseStateHandle<Theme>>().unwrap()
 }

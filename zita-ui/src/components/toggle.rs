@@ -4,7 +4,7 @@ use yew_icons::{Icon, IconId};
 
 use web_sys::HtmlInputElement;
 
-use crate::theme::use_theme;
+use super::use_theme;
 
 #[derive(Debug, PartialEq, Properties)]
 pub struct Props<T>
