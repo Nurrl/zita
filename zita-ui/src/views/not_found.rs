@@ -19,10 +19,10 @@ pub fn NotFound() -> Html {
             <p>{"It seems the resource you're after does not exist."}</p>
 
             <p>
-                <Link<Route> to={Route::Home}>
+                <a href="javascript:history.back()" >
                     <Icon icon_id={IconId::LucideUndo} width="16px" height="16px" />
                     {" Save me from the void"}
-                </Link<Route>>
+                </a>
             </p>
         </Island>
     }
