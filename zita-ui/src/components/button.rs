@@ -8,6 +8,9 @@ pub struct Props {
     #[prop_or(AttrValue::from("button"))]
     pub type_: AttrValue,
 
+    #[prop_or_default]
+    pub disabled: bool,
+
     #[prop_or(AttrValue::from("96px"))]
     pub size: AttrValue,
 
@@ -37,11 +40,19 @@ pub fn Button(props: &Props) -> Html {
 
     transition: 0.15s;
 
-    :hover {
+    :hover:enabled {
         background: ${contrast};
         color: ${text};
 
         cursor: pointer;
+    }
+
+    :disabled {
+        background: ${contrast};
+        border-color: ${contrast};
+        opacity: 0.6;
+
+        transition: 0.2s;
     }
     "#,
         text = theme.text(),
@@ -50,10 +61,13 @@ pub fn Button(props: &Props) -> Html {
         size = props.size
     );
 
+    let disabled = props.disabled;
+
     html! {
         <button
             type={props.type_.clone()}
-            class={style}>
+            class={style}
+            {disabled}>
             {for props.children.iter()}
         </button>
     }

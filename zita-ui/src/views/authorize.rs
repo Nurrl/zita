@@ -7,15 +7,33 @@ use crate::components::*;
 
 #[styled_component]
 pub fn Authorize() -> Html {
-    let onsubmit = Callback::from(|e: SubmitEvent| {
-        let form = e.target_unchecked_into::<HtmlFormElement>();
-        let data = FormData::new_with_form(&form).expect("Unable to select form data, aborting.");
+    let loading = use_state(|| false);
 
-        gloo::console::log!("Form trigerer:", e.submitter());
-        gloo::console::log!("Form datas:", data);
-        gloo::dialogs::alert("Submitted !");
+    let onsubmit = Callback::from({
+        let loading = loading.clone();
 
-        e.prevent_default();
+        move |e: SubmitEvent| {
+            loading.set(true);
+
+            let form = e.target_unchecked_into::<HtmlFormElement>();
+            let data =
+                FormData::new_with_form(&form).expect("Unable to select form data, aborting.");
+
+            gloo::console::debug!(e.submitter());
+            gloo::console::debug!(data);
+
+            yew::platform::spawn_local({
+                let loading = loading.clone();
+
+                async move {
+                    yew::platform::time::sleep(std::time::Duration::from_secs(3)).await;
+
+                    loading.set(false);
+                }
+            });
+
+            e.prevent_default();
+        }
     });
 
     html! {
@@ -46,9 +64,18 @@ pub fn Authorize() -> Html {
                 <br />
 
                 <p>
-                    <Button type_="submit" size="100%">
-                        {"Sign in"}<Icon icon_id={ IconId::LucideChevronLast } />
-                    </Button>
+                    <Button type_="submit" disabled={*loading} size="100%"> {
+                        if *loading {
+                            html! { <Spinner /> }
+                        } else {
+                            html!{
+                                <>
+                                    {"Sign in"}
+                                    <Icon icon_id={ IconId::LucideChevronLast } />
+                                </>
+                            }
+                        }
+                    } </Button>
                 </p>
             </form>
 
