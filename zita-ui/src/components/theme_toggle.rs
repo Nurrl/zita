@@ -15,11 +15,7 @@ pub struct Props {
 pub fn ThemeToggle(props: &Props) -> Html {
     let theme = use_theme();
 
-    use_effect({
-        let theme = theme.clone();
-
-        move || Theme::store(*theme)
-    });
+    use_effect_with_deps(move |theme| Theme::store(**theme), theme.clone());
 
     html! {
         <Toggle<Theme>
