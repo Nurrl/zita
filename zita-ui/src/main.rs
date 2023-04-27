@@ -1,4 +1,3 @@
-use stylist::yew::*;
 use yew::prelude::*;
 use yew_router::prelude::*;
 
@@ -8,7 +7,7 @@ mod views;
 
 use components::*;
 
-#[styled_component]
+#[function_component]
 pub fn Root() -> Html {
     html! {
         <BrowserRouter>

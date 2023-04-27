@@ -1,11 +1,10 @@
-use stylist::yew::*;
 use web_sys::{FormData, HtmlFormElement};
 use yew::prelude::*;
 use yew_icons::{Icon, IconId};
 
 use crate::components::*;
 
-#[styled_component]
+#[function_component]
 pub fn Authorize() -> Html {
     let loading = use_state(|| false);
 
