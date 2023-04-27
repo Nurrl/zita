@@ -15,7 +15,6 @@ yew_icons = { version = "0.7.1", features = ["lucide"] }
 
 stylist = { version = "0.12.0", features = ["yew_integration"] }
 
-nanoid = "0.4.0"
-getrandom = { version = "*", features = ["js"] }
+fastrand = "1.9.0"
 serde = { version = "1.0.160", default-features = false, features = ["derive"] }
 derive_builder = { version = "0.12.0", default-features = false, features = ["clippy"] }

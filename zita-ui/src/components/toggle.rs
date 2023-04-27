@@ -88,7 +88,14 @@ pub fn Toggle<T: Copy + PartialEq + 'static>(props: &Props<T>) -> Html {
             .unwrap_or(&format!("calc({} * 2)", props.size).into())
     );
 
-    let id = use_memo(|_| nanoid::nanoid!(10), ());
+    let id = use_memo(
+        |_| {
+            std::iter::repeat_with(|| fastrand::alphanumeric())
+                .take(8)
+                .collect::<String>()
+        },
+        (),
+    );
     let checked = *props.value == props.states.1;
     let onchange = Callback::from({
         let value = props.value.clone();
