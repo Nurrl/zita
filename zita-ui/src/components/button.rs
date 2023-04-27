@@ -11,6 +11,9 @@ pub struct Props {
     #[prop_or_default]
     pub disabled: bool,
 
+    #[prop_or_default]
+    pub onclick: Callback<MouseEvent>,
+
     #[prop_or(AttrValue::from("96px"))]
     pub size: AttrValue,
 
@@ -61,12 +64,14 @@ pub fn Button(props: &Props) -> Html {
         size = props.size
     );
 
+    let onclick = &props.onclick;
     let disabled = props.disabled;
 
     html! {
         <button
             type={props.type_.clone()}
             class={style}
+            {onclick}
             {disabled}>
             {for props.children.iter()}
         </button>

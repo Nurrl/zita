@@ -4,12 +4,12 @@ use yew::prelude::*;
 use crate::theme::Theme;
 
 #[derive(Debug, PartialEq, Properties)]
-pub struct ThemeProviderProps {
+pub struct Props {
     pub children: Children,
 }
 
 #[styled_component]
-pub fn ThemeProvider(props: &ThemeProviderProps) -> Html {
+pub fn ThemeProvider(props: &Props) -> Html {
     let theme = use_state_eq(Theme::load);
 
     let style = css!(
