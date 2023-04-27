@@ -5,7 +5,7 @@ use crate::components::*;
 #[function_component]
 pub fn ComponentMuseum() -> Html {
     let notification = use_notification();
-    let value = use_state(|| false);
+    let value = use_state_eq(|| false);
 
     html! {
         <Island>

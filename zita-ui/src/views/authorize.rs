@@ -6,7 +6,7 @@ use crate::components::*;
 
 #[function_component]
 pub fn Authorize() -> Html {
-    let loading = use_state(|| false);
+    let loading = use_state_eq(|| false);
 
     let onsubmit = Callback::from({
         let loading = loading.clone();
