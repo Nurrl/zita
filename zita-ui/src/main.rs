@@ -12,7 +12,9 @@ pub fn Root() -> Html {
     html! {
         <BrowserRouter>
             <ThemeProvider>
-                <Switch<views::Route> render={views::switch} />
+                <NotificationProvider>
+                    <Switch<views::Route> render={views::switch} />
+                </NotificationProvider>
             </ThemeProvider>
         </BrowserRouter>
     }

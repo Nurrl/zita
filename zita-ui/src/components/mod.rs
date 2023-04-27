@@ -9,6 +9,9 @@ pub use input::Input;
 mod island;
 pub use island::Island;
 
+mod notification;
+pub use notification::{use_notification, Notification, NotificationProvider};
+
 mod spinner;
 pub use spinner::Spinner;
 
