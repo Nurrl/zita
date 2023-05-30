@@ -3,6 +3,7 @@ use color_eyre::eyre::{self, Context};
 use deadpool_postgres::tokio_postgres;
 use envconfig::Envconfig;
 use paperclip::actix::{web, OpenApiExt};
+use tracing_subscriber::{fmt, prelude::*, EnvFilter};
 
 mod config;
 mod error;
@@ -20,11 +21,17 @@ async fn main() -> eyre::Result<()> {
     color_eyre::install()?;
 
     // Set-up the log and traces handler
-    tracing_subscriber::fmt().init();
+    tracing_subscriber::registry()
+        .with(fmt::layer())
+        .with(EnvFilter::from_default_env())
+        .init();
 
     // Load the config from the environment
     let env = config::Env::init_from_env()?;
     let config = env.load_config().await?;
+
+    let argon2 = web::Data::new(config.to_argon2()?);
+    let jwks = web::Data::new(config.to_jwks().await?);
 
     let pool = web::Data::new(
         deadpool_postgres::Pool::builder(deadpool_postgres::Manager::new(
@@ -36,16 +43,14 @@ async fn main() -> eyre::Result<()> {
         .wrap_err("While building the Postgres connection Pool")?,
     );
 
-    let argon2 = web::Data::new(config.to_argon2()?);
-    let jwks = web::Data::new(config.to_jwks().await?);
+    tracing::debug!("Connected database pool to Postgres server..");
 
     HttpServer::new(move || {
         let app = App::new()
             .wrap_api()
-            .app_data(pool.clone())
             .app_data(argon2.clone())
             .app_data(jwks.clone())
-            // .app_data(keypairs.clone())
+            .app_data(pool.clone())
             .service(probes::healthz)
             .service(well_known::mounts())
             // .service(v1::mounts())
@@ -56,6 +61,8 @@ async fn main() -> eyre::Result<()> {
         let app = app
             .with_json_spec_at("/swagger/spec/v2")
             .with_swagger_ui_at("/swagger");
+
+        tracing::debug!("Started new API worker thread..");
 
         app.build()
     })

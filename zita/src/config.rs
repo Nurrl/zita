@@ -7,6 +7,7 @@ use std::{
 
 use aliri::{
     jwa::{self, ec, rsa},
+    jwk::KeyIdRef,
     jws, Jwk, Jwks,
 };
 use color_eyre::eyre::{self, Context};
@@ -37,7 +38,14 @@ impl Env {
             .await
             .wrap_err("While reading configuration file")?;
 
-        serde_yaml::from_slice(&conf).wrap_err("While deserializing configuration")
+        let config = serde_yaml::from_slice(&conf).wrap_err("While deserializing configuration")?;
+
+        tracing::debug!(
+            "Sucessfully loaded configuration file at `{}`..",
+            self.configuration_path.display()
+        );
+
+        Ok(config)
     }
 }
 
@@ -113,6 +121,17 @@ impl Config {
                     .with_key_id(kid.into()),
             );
         }
+
+        tracing::debug!(
+            "Loaded {} keys from disk for token signature: {}.",
+            jwks.keys().len(),
+            jwks.keys()
+                .iter()
+                .filter_map(Jwk::key_id)
+                .map(KeyIdRef::as_str)
+                .collect::<Vec<_>>()
+                .join(", ")
+        );
 
         Ok(jwks)
     }
