@@ -37,8 +37,18 @@ impl Notification {
         self.id
     }
 
-    pub fn take_duration(&self) -> Option<Duration> {
-        self.duration.replace(None)
+    /// Set the Notification on fire and let it disapear after the said time.
+    pub fn ignite(&self, state: UseReducerHandle<NotificationState>) {
+        let wait = self.duration.replace(None);
+        let id = self.id();
+
+        if let Some(wait) = wait {
+            yew::platform::spawn_local(async move {
+                yew::platform::time::sleep(wait).await;
+
+                state.dispatch(NotificationAction::Erase(id))
+            });
+        }
     }
 
     pub fn to_html(&self) -> Html {

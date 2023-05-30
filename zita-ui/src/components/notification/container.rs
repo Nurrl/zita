@@ -1,7 +1,7 @@
 use stylist::yew::*;
 use yew::prelude::*;
 
-use super::{state::NotificationAction, use_notification};
+use super::use_notification;
 
 #[function_component]
 pub fn NotificationContainer() -> Html {
@@ -29,27 +29,12 @@ pub fn NotificationContainer() -> Html {
     "#
     );
 
+    // On state modification, ignite all notification that haven't been ignited yet.
     use_effect_with_deps(
         |state| {
-            for (id, duration) in state
+            state
                 .notifications()
-                .map(|notification| {
-                    notification
-                        .take_duration()
-                        .map(|duration| (notification.id(), duration))
-                })
-                .flatten()
-            {
-                yew::platform::spawn_local({
-                    let state = state.clone();
-
-                    async move {
-                        yew::platform::time::sleep(duration).await;
-
-                        state.dispatch(NotificationAction::Erase(id))
-                    }
-                });
-            }
+                .for_each(|notification| notification.ignite(state.clone()))
         },
         state.clone(),
     );
