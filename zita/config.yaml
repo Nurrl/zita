@@ -1,0 +1,5 @@
+keys:
+  - algorithm: RS256
+    path: ./rsa.example.pem
+  - algorithm: ES256
+    path: ./ec.example.pem
