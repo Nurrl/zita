@@ -1,12 +1,11 @@
 use stylist::yew::*;
 use yew::prelude::*;
 
-use super::use_notification;
+use super::{state::NotificationAction, use_notification};
 
 #[function_component]
 pub fn NotificationContainer() -> Html {
     let state = use_notification();
-    let notifications = state.to_html();
 
     let style = use_style!(
         r#"
@@ -30,9 +29,34 @@ pub fn NotificationContainer() -> Html {
     "#
     );
 
+    use_effect_with_deps(
+        |state| {
+            for (id, duration) in state
+                .notifications()
+                .map(|notification| {
+                    notification
+                        .take_duration()
+                        .map(|duration| (notification.id(), duration))
+                })
+                .flatten()
+            {
+                yew::platform::spawn_local({
+                    let state = state.clone();
+
+                    async move {
+                        yew::platform::time::sleep(duration).await;
+
+                        state.dispatch(NotificationAction::Erase(id))
+                    }
+                });
+            }
+        },
+        state.clone(),
+    );
+
     html! {
         <div class={style}>
-            {notifications}
+            {state.to_html()}
         </div>
     }
 }

@@ -13,7 +13,13 @@ pub fn ComponentMuseum() -> Html {
 
             <p>
                 <Button onclick={
-                    Callback::from(move |_| notification.dispatch(Notification::builder().message("Hello from the notifications").build().unwrap()))
+                    Callback::from(move |_| notification.dispatch(
+                        Notification::builder()
+                            .message("Hello from the notifications")
+                            .build()
+                            .unwrap()
+                            .into()
+                    ))
                 }>{"Very nice button"}</Button>
             </p>
 
