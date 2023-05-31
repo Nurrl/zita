@@ -12,7 +12,7 @@ pub fn NotificationProvider(props: &Props) -> Html {
     let notifications = use_reducer_eq(NotificationState::default);
 
     html! {
-        <ContextProvider<UseReducerHandle<NotificationState>> context={notifications.clone()}>
+        <ContextProvider<UseReducerHandle<NotificationState>> context={notifications}>
             {for props.children.iter()}
             <NotificationContainer />
         </ContextProvider<UseReducerHandle<NotificationState>>>

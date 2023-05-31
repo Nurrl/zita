@@ -60,8 +60,8 @@ impl Notification {
     }
 }
 
-impl Into<NotificationAction> for Notification {
-    fn into(self) -> NotificationAction {
-        NotificationAction::Create(self)
+impl From<Notification> for NotificationAction {
+    fn from(val: Notification) -> Self {
+        NotificationAction::Create(val)
     }
 }

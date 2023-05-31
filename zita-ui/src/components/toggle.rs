@@ -90,7 +90,7 @@ pub fn Toggle<T: Copy + PartialEq + 'static>(props: &Props<T>) -> Html {
 
     let id = use_memo(
         |_| {
-            std::iter::repeat_with(|| fastrand::alphanumeric())
+            std::iter::repeat_with(fastrand::alphanumeric)
                 .take(8)
                 .collect::<String>()
         },

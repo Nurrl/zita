@@ -1,7 +1,7 @@
 use gloo::storage::{LocalStorage, Storage};
 use serde::{Deserialize, Serialize};
 
-pub const THEME_STORAGE_KEY: &'static str = "theme";
+pub const THEME_STORAGE_KEY: &str = "theme";
 
 #[derive(Debug, Default, Clone, Copy, PartialEq, Serialize, Deserialize)]
 pub enum Theme {
